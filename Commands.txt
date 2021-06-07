@@ -1,0 +1,12 @@
+packages to install/commandes to run 
+
+yarn -global 
+node consoleTimer.js 
+yarn add momment 
+yarn add express
+yarn run server 
+npm express-generator
+yarn add nodemon 
+yarn add fuse.js
+yarn add axios
+node expole.js

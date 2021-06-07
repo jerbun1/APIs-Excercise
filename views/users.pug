@@ -1,0 +1,37 @@
+extends layout
+
+mixin row(users)
+ tr
+  td=users.id 
+  td=users.email 
+  td=users.first_name 
+  td=users.last_name 
+  td=users.avatar 
+
+block content
+  h1 Users 
+  table#user_data 
+   thead 
+    tr  
+     th ID 
+     th Email 
+     th First Name 
+     th Last Name 
+     th Avatar
+   tbody 
+    for users in data 
+      +row(users)
+
+  form.form_submit
+  label Email:
+  input#new_email(type='text')
+  br
+  label First Name:
+  input#new_first_name(type='text')
+  br
+  label Last Name :
+  input#new_last_name(type='text')
+  br
+  input#users_submit(type='submit')
+
+   

@@ -1,0 +1,70 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+    script(src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js')
+    link(rel='stylesheet' href='https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css' samesite='Strict')
+    
+    script.
+      $(document).ready(() => {
+        datatable=$("#user_data").DataTable({
+          "columnDefs": [
+          {"targets": 2, "searchable":false}
+          ]
+        });
+        
+        $.get("https://reqres.in/api/users", (res) =>{
+          res.data.forEach(users => {
+            datatable.row.add([
+              users.id,
+              users.email,
+              users.first_name,
+              users.last_name,
+              `<img src="${users.avatar}" alt="avatar">`
+
+              ]).draw();
+          });
+        }); 
+        $("#users_submit").on('click', handleFormSubmit);
+
+      });
+
+      const handleFormSubmit = event => {
+      	event.preventDefault();
+      	console.log("click");
+
+      	const user_email = $("#new_email").val().trim();
+      	const user_fname = $("#new_first_name").val().trim();
+      	const user_lname = $("#new_last_name").val().trim();
+      	const user_image = "https://source.unsplash.com/random/128x128";
+
+      	const data = {
+      		first_name: user_fname,
+      		last_name: user_lname,
+      		email: user_email,
+      		avatar: user_image
+      	}
+      	console.log(data);
+      	$.post("https://reqres.in/api/users", data, (res) => {
+      			datatable.row.add([
+      				res.id,
+      				res.email,
+      				res.first_name,
+      				res.last_name,
+      				`<img src="${res.avatar}" alt="avatar">`
+      			]).draw();
+      	});
+
+     	$("#new_email").val("");
+      	$("#new_first_name").val("");
+      	 $("#new_last_name").val("");
+     }
+
+      
+
+     
+
+  body
+    block content
